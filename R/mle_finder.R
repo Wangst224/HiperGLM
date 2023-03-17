@@ -22,7 +22,7 @@ find_mle_linear_pseudo_inv = function(design, outcome) {
     as.vector(qr.solve(A, b))
 }
 
-find_mle_logit_newton = function(design, outcome, max_iter = 100, init = rep(0, ncol(design))) {
+find_mle_logit_newton = function(design, outcome, solver = "qr", max_iter = 100, init = rep(0, ncol(design))) {
 
     coeff = init
     iter = 0
@@ -34,7 +34,8 @@ find_mle_logit_newton = function(design, outcome, max_iter = 100, init = rep(0, 
 
         coeff = take_one_newton_step(coeff,
                                      function(x) log_likelihood_logit_gradient(design, outcome, x),
-                                     function(x) log_likelihood_logit_hessian(design, outcome, x))
+                                     function(x) log_likelihood_logit_hessian(design, outcome, x),
+                                     solver)
 
         post_loglikelihood = log_likelihood_logit(design, outcome, coeff)
 

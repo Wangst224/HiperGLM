@@ -44,3 +44,21 @@ test_that("Logit MLE: BFGS and Newton", {
     ))
 
 })
+
+test_that("Logit MLE Newton method: QR solver and LU solver", {
+
+    n_obs = 32
+    n_pred = 4
+
+    data_simulated = simulate_data(n_obs, n_pred, model = "logit", seed = 185)
+
+    logit_MLE_qr = find_mle_logit_newton(data_simulated$design, data_simulated$outcome, solver = "qr")
+    logit_MLE_lu = find_mle_logit_newton(data_simulated$design, data_simulated$outcome, solver = "lu")
+
+    expect_true(are_all_close(
+        logit_MLE_qr,
+        logit_MLE_lu,
+        abs_tol = 1e-2, rel_tol = 1e-2
+    ))
+
+})
