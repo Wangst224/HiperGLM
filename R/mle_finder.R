@@ -32,9 +32,9 @@ find_mle_logit_newton = function(design, outcome, max_iter = 100, init = rep(0, 
     while (iter < max_iter) {
         pre_loglikelihood = log_likelihood_logit(design, outcome, coeff)
 
-        hessian = log_likelihood_logit_hessian(design, outcome, coeff)
-        gradient = log_likelihood_logit_gradient(design, outcome, coeff)
-        coeff = coeff - solve(hessian, gradient)
+        coeff = take_one_newton_step(coeff,
+                                     function(x) log_likelihood_logit_gradient(design, outcome, x),
+                                     function(x) log_likelihood_logit_hessian(design, outcome, x))
 
         post_loglikelihood = log_likelihood_logit(design, outcome, coeff)
 
