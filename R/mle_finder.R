@@ -19,7 +19,7 @@ find_mle_linear_pseudo_inv = function(design, outcome) {
     A = crossprod(design)
     b = crossprod(design, outcome)
 
-    as.vector(qr.solve(A, b))
+    as.vector(qr_solve(A, b))
 }
 
 find_mle_logit_newton = function(design, outcome, solver = "qr", max_iter = 100, init = rep(0, ncol(design))) {

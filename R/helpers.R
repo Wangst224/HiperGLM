@@ -10,7 +10,7 @@ take_one_newton_step = function(x0, func_gradient, func_hessian, solver = "qr") 
     }
 
     if (solver == "qr") {
-        x1 = x0 - qr.solve(func_hessian(x0), func_gradient(x0))
+        x1 = x0 - qr_solve(func_hessian(x0), func_gradient(x0))
     }
 
     else if (solver == "lu") {
